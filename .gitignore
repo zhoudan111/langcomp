@@ -1,0 +1,8 @@
+target
+src
+.vscode
+*.lock
+*.cod
+*.obj
+*.lib
+*.exe
