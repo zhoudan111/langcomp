@@ -6,3 +6,7 @@ src
 *.obj
 *.lib
 *.exe
+*.o
+*.a
+C
+CPP

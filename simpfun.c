@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "simpfun.h"
 
-#ifdef _WIN32
+#if defined(_WIN32)
 #include <Windows.h>
 
 static LARGE_INTEGER freq, start;
@@ -12,12 +12,30 @@ void simpstart()
     QueryPerformanceCounter(&start);
 }
 
-static simpfin()
+static void simpfin()
 {
     LARGE_INTEGER elapse;
     QueryPerformanceCounter(&elapse);
     elapse.QuadPart -= start.QuadPart;
     double dt = 1.0 * elapse.QuadPart / freq.QuadPart;
+    printf_s("cost %f seconds, ", dt);
+}
+#elif defined(__APPLE__)
+#include <time.h>
+
+#define printf_s printf
+
+static __uint64_t start;
+
+void simpstart()
+{
+    start = clock_gettime_nsec_np(CLOCK_MONOTONIC);
+}
+
+static void simpfin()
+{
+    __uint64_t elapse = clock_gettime_nsec_np(CLOCK_MONOTONIC) - start;
+    double dt = elapse / 1000000000.0;
     printf_s("cost %f seconds, ", dt);
 }
 #endif
