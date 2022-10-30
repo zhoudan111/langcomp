@@ -14,6 +14,7 @@ cl /O2 /FAcs C.c simpfun.obj
 echo "---build cpp----"
 cl /O2 /EHsc /FAcs CPP.cpp simpfun.obj
 echo "---build rust---"
+cargo rustc --release -- --emit asm
 cargo build --release
 echo "-------C--------"
 for /L %%i in (1, 1, 10) do C.exe 1000 1000 1000
