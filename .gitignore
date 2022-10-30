@@ -6,6 +6,7 @@ src
 *.obj
 *.lib
 *.exe
+*.s
 *.o
 *.a
 C

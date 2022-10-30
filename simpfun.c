@@ -38,6 +38,25 @@ static void simpfin()
     double dt = elapse / 1000000000.0;
     printf_s("cost %f seconds, ", dt);
 }
+#else
+#include <time.h>
+
+#define printf_s printf
+
+static struct timespec start;
+
+void simpstart()
+{
+    clock_gettime(CLOCK_MONOTONIC, &start);
+}
+
+static void simpfin()
+{
+    struct timespec finish;
+    clock_gettime(CLOCK_MONOTONIC, &finish);
+    double dt = ((finish.tv_sec - start.tv_sec) * 1000000000.0 + finish.tv_nsec - start.tv_nsec) / 1000000000.0;
+    printf_s("cost %f seconds, ", dt);
+}
 #endif
 
 static long long sum = 0;
