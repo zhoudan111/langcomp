@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "simpfun.h"
 
 #if defined(_WIN32)
@@ -60,10 +61,15 @@ static void simpfin()
 #endif
 
 static long long sum = 0;
+static char buffer0[65536 * 64];
+static char buffer1[65536 * 64];
 
 void simpfun(int i, int j, int k)
 {
     ++sum;
+    memset(buffer0, 0xc3, sizeof(buffer0));
+    memset(buffer1, 0xb5, sizeof(buffer1));
+    memcpy(buffer0, buffer1, sizeof(buffer1));
 }
 
 void dumpfin()
