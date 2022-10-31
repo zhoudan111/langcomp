@@ -2,7 +2,7 @@ set -e
 mkdir -p src
 cp RUST.rs src/main.rs
 cargo clean
-rm -f *.o *.lib *.a C CPP
+rm -f *.s *.cod *.o *.obj *.a *.lib C CPP
 echo "----simpfun-----"
 cc -O2 -S simpfun.c
 cc -O2 -c simpfun.c

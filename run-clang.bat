@@ -12,12 +12,15 @@ del *.exe
 del C
 del CPP
 echo "----simpfun-----"
-cl /O2 /FAcs /c simpfun.c
-lib simpfun.obj
+clang -O2 -S simpfun.c
+clang -O2 -c simpfun.c
+lib simpfun.o
 echo "----build c-----"
-cl /O2 /FAcs C.c simpfun.obj
+clang -O2 -S C.c
+clang -O2 -o C.exe C.c simpfun.o
 echo "---build cpp----"
-cl /O2 /EHsc /FAcs CPP.cpp simpfun.obj
+clang++ -O2 -S CPP.cpp
+clang++ -O2 -o CPP.exe CPP.cpp simpfun.o
 echo "---build rust---"
 cargo rustc --release -- --emit asm
 cargo build --release
