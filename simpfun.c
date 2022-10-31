@@ -1,14 +1,33 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "simpfun.h"
+
+static size_t M;
+static char *buffer0, *buffer1;
+
+static void simpini(int m)
+{
+    M = m * 1024;
+    buffer0 = malloc(M);
+    buffer1 = malloc(M);
+    srand(time(NULL));
+    for (int ndx = 0; ndx < M; ++ndx)
+    {
+        buffer0[ndx] = rand();
+        buffer1[ndx] = rand();
+    }
+}
 
 #if defined(_WIN32)
 #include <Windows.h>
 
 static LARGE_INTEGER freq, start;
 
-void simpstart()
+void simpstart(int m)
 {
+    simpini(m);
     QueryPerformanceFrequency(&freq);
     QueryPerformanceCounter(&start);
 }
@@ -28,8 +47,9 @@ static void simpfin()
 
 static __uint64_t start;
 
-void simpstart()
+void simpstart(int m)
 {
+    simpini(m);
     start = clock_gettime_nsec_np(CLOCK_MONOTONIC);
 }
 
@@ -46,8 +66,9 @@ static void simpfin()
 
 static struct timespec start;
 
-void simpstart()
+void simpstart(int m)
 {
+    simpini(m);
     clock_gettime(CLOCK_MONOTONIC, &start);
 }
 
@@ -61,19 +82,16 @@ static void simpfin()
 #endif
 
 static long long sum = 0;
-static char buffer0[65536 * 64];
-static char buffer1[65536 * 64];
 
 void simpfun(int i, int j, int k)
 {
-    ++sum;
-    memset(buffer0, 0xc3, sizeof(buffer0));
-    memset(buffer1, 0xb5, sizeof(buffer1));
-    memcpy(buffer0, buffer1, sizeof(buffer1));
+    sum += memcmp(buffer0, buffer1, M);
 }
 
 void dumpfin()
 {
     simpfin();
+    free(buffer0);
+    free(buffer1);
     printf_s("sum %lld\n", sum);
 }

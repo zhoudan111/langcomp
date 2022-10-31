@@ -1,11 +1,12 @@
-#ifdef  __cplusplus
-extern "C" {
+#ifdef __cplusplus
+extern "C"
+{
 #endif
 
-void simpstart();
-void simpfun(int i, int j, int k);
-void dumpfin();
+    void simpstart(int m);
+    void simpfun(int i, int j, int k);
+    void dumpfin();
 
-#ifdef  __cplusplus
+#ifdef __cplusplus
 }
 #endif
