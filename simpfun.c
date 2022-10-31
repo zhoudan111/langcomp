@@ -5,18 +5,18 @@
 #include "simpfun.h"
 
 static size_t M;
-static char *buffer0, *buffer1;
+static long long *buffer0, *buffer1;
 
 static void simpini(int m)
 {
-    M = m * 1024;
-    buffer0 = malloc(M);
-    buffer1 = malloc(M);
+    M = m;
+    buffer0 = malloc(M * sizeof(long long));
+    buffer1 = malloc(M * sizeof(long long));
     srand(time(NULL));
     for (int ndx = 0; ndx < M; ++ndx)
     {
-        buffer0[ndx] = rand();
-        buffer1[ndx] = rand();
+        buffer0[ndx] = rand() * rand();
+        buffer1[ndx] = rand() * rand();
     }
 }
 
@@ -85,7 +85,10 @@ static long long sum = 0;
 
 void simpfun(int i, int j, int k)
 {
-    sum += memcmp(buffer0, buffer1, M);
+    for (int ndx = 0; ndx < M; ++ndx)
+    {
+        sum += buffer0[ndx] - buffer1[ndx];
+    }
 }
 
 void dumpfin()
