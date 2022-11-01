@@ -17,9 +17,9 @@ echo "---build rust---"
 cargo rustc --release -- --emit asm
 cargo build --release
 echo "-------C--------"
-for ((i=0; i<10; ++i)); do ./C 64 1000 1000 1000; done
+for ((i=0; i<10; ++i)); do ./C $1 $2 $3 $4; done
 echo "------CPP-------"
-for ((i=0; i<10; ++i)); do ./CPP 64 1000 1000 1000; done
+for ((i=0; i<10; ++i)); do ./CPP $1 $2 $3 $4; done
 echo "------RUST------"
-for ((i=0; i<10; ++i)); do target/release/RUST 64 1000 1000 1000; done
+for ((i=0; i<10; ++i)); do target/release/RUST $1 $2 $3 $4; done
 echo "------done------"
