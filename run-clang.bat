@@ -25,9 +25,9 @@ echo "---build rust---"
 cargo rustc --release -- --emit asm
 cargo build --release
 echo "-------C--------"
-for /L %%i in (1, 1, 10) do C.exe 64 1000 1000 1000
+for /L %%i in (1, 1, 10) do C.exe %1 %2 %3 %4
 echo "------CPP-------"
-for /L %%i in (1, 1, 10) do CPP.exe 64 1000 1000 1000
+for /L %%i in (1, 1, 10) do CPP.exe %1 %2 %3 %4
 echo "------RUST------"
-for /L %%i in (1, 1, 10) do target\release\RUST.exe 64 1000 1000 1000
+for /L %%i in (1, 1, 10) do target\release\RUST.exe %1 %2 %3 %4
 echo "------done------"
